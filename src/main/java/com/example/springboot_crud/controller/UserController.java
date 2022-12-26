@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -25,4 +27,19 @@ public class UserController {
         model.addAttribute("users",userList);
         return "index";
     }
+
+    @GetMapping("/addUser")
+    public String addUser(Model model){
+        User user = new User();
+        model.addAttribute("addUser",user);
+        return "addUser";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("user") User user){
+        userService.addUser(user);
+        return "redirect:/";
+    }
+
+
 }
