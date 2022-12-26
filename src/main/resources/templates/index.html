@@ -12,7 +12,7 @@
   <h1>Users List</h1>
   <hr>
   <a th:href="@{/addUser}"class="btn btn-secondary mb-2">Add User</a>
-  <table class="table table-bordered table-dark">
+  <table class="table table-bordered table-dark" id="userTable">
     <thead>
     <tr>
       <th>Name</th>
@@ -22,7 +22,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="allUsers:${users}">
+    <tr th:each="allUsers:${totalUsers}">
       <td th:text="${allUsers.name}"></td>
       <td th:text="${allUsers.lastName}"></td>
       <td th:text="${allUsers.email}"></td>
@@ -31,6 +31,31 @@
     </tr>
     </tbody>
   </table>
+<!--  paginated start-->
+  <div th:if="${totalPage > 1}">
+    <div class="row col-sm-10">
+      <div class="col-sm-2">
+        Total Rows : [[${totalItems}]]
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"th:each="i:${#numbers.sequence(1,totalPage)}">
+            <a class="page-link" th:if="${currentPage != i}"th:href="@{/page/{pageNo}(pageNo=${i})}">[[${i}]]</a>
+            <a class="page-link text-secondary" th:unless="${currentPage != i}">[[${i}]]</a>
+          </li>
+          <li class="page-item">
+            <a  class="page-link" th:if="${currentPage < totalPage}"th:href="@{/page/{pageNo}(pageNo=${currentPage+1})}">Next</a>
+            <span class="page-link text-secondary" th:unless="${currentPage < totalItems}">Next</span>
+          </li>
+          <li class="page-item">
+            <a class="page-link" th:if="${currentPage < totalPage}" th:href="@{/page/{pageNo}(pageNo=${totalPage})}">Last</a>
+            <span class="page-link text-secondary" th:unless="${currentPage < totalPage}">Last</span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+<!--  paginated end-->
 </div>
 </body>
 </html>
