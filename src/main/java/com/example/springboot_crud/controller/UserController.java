@@ -47,5 +47,11 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable("id")Long id,Model model){
+        model.addAttribute("user",userService.findUserById(id));
+        return "updateUser";
+    }
+
 
 }

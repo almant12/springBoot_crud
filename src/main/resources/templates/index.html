@@ -26,7 +26,8 @@
       <td th:text="${allUsers.name}"></td>
       <td th:text="${allUsers.lastName}"></td>
       <td th:text="${allUsers.email}"></td>
-      <td><a th:href="@{/deleteUser/{id}(id=${allUsers.id})}" class="btn btn-danger">Delete</a></td>
+      <td><a th:href="@{/deleteUser/{id}(id=${allUsers.id})}" class="btn btn-danger">Delete</a>
+        <a th:href="@{/updateUser/{id}(id=${allUsers.id})}" class="btn btn-warning">Edit</a></td>
     </tr>
     </tbody>
   </table>
