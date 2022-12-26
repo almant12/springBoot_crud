@@ -9,4 +9,6 @@ public interface UserService {
 
     void addUser(User user);
 
+    void deleteUserById(Long id);
+
 }
