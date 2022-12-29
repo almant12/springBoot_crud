@@ -15,4 +15,5 @@ public interface UserService {
    User findUserById(Long id);
 
    Page<User> findPaginated(Integer pageNo,Integer pageSize);
+   List<User> findByKeyword(String keyword);
 }

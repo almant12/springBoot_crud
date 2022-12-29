@@ -1,7 +1,6 @@
 package com.example.springboot_crud.controller;
 
 import com.example.springboot_crud.model.User;
-import com.example.springboot_crud.repository.UserRepository;
 import com.example.springboot_crud.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 @AllArgsConstructor
 public class UserController {
@@ -23,8 +20,8 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String getAllUsers(Model model){
-        return findPaginated(1,model);
+    public String getAllUsers(Model model,String keyword){
+        return findPaginated(1,keyword,model);
     }
 
     @GetMapping("/addUser")
@@ -53,15 +50,20 @@ public class UserController {
     }
 
     @GetMapping("/page/{pageNo}")
-    private String findPaginated(@PathVariable("pageNo")Integer pageNo,Model model){
+    private String findPaginated(@PathVariable("pageNo")Integer pageNo,String keyword,Model model) {
         int pageSize = 5;
 
-        Page<User> findPaginated = userService.findPaginated(pageNo,pageSize);
+        Page<User> findPaginated = userService.findPaginated(pageNo, pageSize);
 
-        model.addAttribute("currentPage",pageNo);
-        model.addAttribute("totalPage",findPaginated.getTotalPages());
-        model.addAttribute("totalItems",findPaginated.getTotalElements());
-        model.addAttribute("totalUsers",findPaginated.getContent());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPage", findPaginated.getTotalPages());
+        model.addAttribute("totalItems", findPaginated.getTotalElements());
+
+        if (keyword != null) {
+           model.addAttribute("totalUsers", userService.findByKeyword(keyword));
+        } else {
+            model.addAttribute("totalUsers", findPaginated.getContent());
+        }
         return "index";
     }
 
