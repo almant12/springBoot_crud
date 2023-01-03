@@ -12,11 +12,12 @@
   <h1>Users List</h1>
   <hr>
   <a th:href="@{/addUser}"class="btn btn-secondary mb-2">Add User</a>
-
+  <div th:if="${totalItems > 0}">
     <form class="form-inline" align="center" th:action="@{/}" method="GET">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+</div>
 
   <table class="table table-bordered table-dark" id="userTable">
     <thead>
